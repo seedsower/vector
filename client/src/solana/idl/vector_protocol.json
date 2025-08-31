@@ -1,0 +1,46 @@
+{
+  "version": "0.1.0",
+  "name": "vector_protocol",
+  "instructions": [
+    {
+      "name": "initializeExchange",
+      "accounts": [
+        {
+          "name": "exchange",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "exchangeAuthorityBump",
+          "type": "u8"
+        },
+        {
+          "name": "insuranceFundBump",
+          "type": "u8"
+        },
+        {
+          "name": "feeStructure",
+          "type": {
+            "defined": "FeeStructure"
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [],
+  "types": [],
+  "events": [],
+  "errors": []
+}
