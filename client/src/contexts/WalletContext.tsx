@@ -1,11 +1,9 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import "../lib/solana-polyfills";
-import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 
 interface WalletContextType {
   connected: boolean;
   connecting: boolean;
-  publicKey: PublicKey | null;
+  publicKey: any | null;
   connect: () => Promise<void>;
   disconnect: () => void;
   signTransaction: (transaction: any) => Promise<any>;
@@ -21,7 +19,7 @@ interface WalletProviderProps {
 export function WalletProvider({ children }: WalletProviderProps) {
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
-  const [publicKey, setPublicKey] = useState<PublicKey | null>(null);
+  const [publicKey, setPublicKey] = useState<any | null>(null);
   const [wallet, setWallet] = useState<any>(null);
 
   // Check if Phantom wallet is available
@@ -45,11 +43,13 @@ export function WalletProvider({ children }: WalletProviderProps) {
 
       const response = await provider.connect();
       setWallet(provider);
-      setPublicKey(new PublicKey(response.publicKey.toString()));
-      setConnected(true);
       
-      // Store connection state
-      localStorage.setItem('walletConnected', 'true');
+      // Store wallet response
+      if (response.publicKey) {
+        setPublicKey(response.publicKey.toString());
+        setConnected(true);
+        localStorage.setItem('walletConnected', 'true');
+      }
     } catch (error) {
       console.error('Failed to connect wallet:', error);
       alert('Failed to connect wallet. Please make sure Phantom is installed and unlocked.');
@@ -159,5 +159,5 @@ export function useWallet() {
   return context;
 }
 
-// Connection helper
-export const connection = new Connection(clusterApiUrl('devnet'));
+// Connection helper - disabled for demo mode
+// export const connection = new Connection(clusterApiUrl('devnet'));

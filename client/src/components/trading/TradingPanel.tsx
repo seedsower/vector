@@ -7,7 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { tradingApi, calculateLiquidationPrice, calculateMargin, formatPrice, formatCurrency, formatPercent } from "@/lib/trading";
-import { useState } from "react";
+// import { liveTradingClient } from "@/lib/live-trading";
+// import { useWallet } from "@/contexts/WalletContext";
+import { useState, useEffect } from "react";
 import type { CommodityMarket, Price, OrderType, OrderSide } from "@shared/schema";
 
 interface TradingPanelProps {
@@ -20,8 +22,18 @@ export function TradingPanel({ market, currentPrice }: TradingPanelProps) {
   const [orderType, setOrderType] = useState<OrderType>("market");
   const [size, setSize] = useState("");
   const [leverage, setLeverage] = useState([10]);
+  const [isLiveTrading, setIsLiveTrading] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const connected = false;
+  const publicKey = null;
+  const [solBalance, setSolBalance] = useState(0);
+
+  // Demo mode - no live trading
+  useEffect(() => {
+    setIsLiveTrading(false);
+    setSolBalance(0);
+  }, []);
 
   const userId = "demo-user"; // For demo purposes
 
@@ -87,7 +99,7 @@ export function TradingPanel({ market, currentPrice }: TradingPanelProps) {
     ? calculateLiquidationPrice(marketPrice, leverageNum, orderSide === "buy" ? "long" : "short")
     : 0;
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (!currentPrice || sizeNum <= 0) {
       toast({
         title: "Invalid Order",
@@ -97,14 +109,16 @@ export function TradingPanel({ market, currentPrice }: TradingPanelProps) {
       return;
     }
 
-    placeOrderMutation.mutate({
-      marketId: market.id,
-      orderType,
-      side: orderSide,
-      size: size,
-      leverage: leverageNum,
-      price: orderType === "market" ? undefined : currentPrice.price
-    });
+    // Demo mode - use simulated trading
+      placeOrderMutation.mutate({
+        marketId: market.id,
+        orderType,
+        side: orderSide,
+        size: size,
+        userId,
+        leverage: leverageNum,
+        price: orderType === "market" ? undefined : currentPrice.price
+      });
   };
 
   const handleClosePosition = () => {
@@ -211,6 +225,27 @@ export function TradingPanel({ market, currentPrice }: TradingPanelProps) {
               </span>
             </div>
           </div>
+
+          {/* Live Trading Status */}
+          <div className="flex items-center justify-between p-2 bg-muted/20 rounded-lg">
+            <span className="text-xs text-muted-foreground">Trading Mode:</span>
+            <div className="flex items-center space-x-2">
+              <div className={`w-2 h-2 rounded-full ${isLiveTrading ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
+              <span className={`text-xs font-medium ${isLiveTrading ? 'text-green-600' : 'text-yellow-600'}`}>
+                {isLiveTrading ? 'Live (Solana)' : 'Demo'}
+              </span>
+            </div>
+          </div>
+
+          {/* SOL Balance (when live trading) */}
+          {isLiveTrading && (
+            <div className="flex items-center justify-between p-2 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+              <span className="text-xs text-muted-foreground">SOL Balance:</span>
+              <span className="text-xs font-mono text-blue-600 dark:text-blue-400">
+                {solBalance.toFixed(4)} SOL
+              </span>
+            </div>
+          )}
 
           <Button
             onClick={handlePlaceOrder}
