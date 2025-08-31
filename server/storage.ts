@@ -81,8 +81,9 @@ export class MemStorage implements IStorage {
   }
 
   private initializeData() {
-    // Create sample markets
+    // Create comprehensive commodity markets - all 40 assets
     const sampleMarkets: InsertCommodityMarket[] = [
+      // Precious Metals (10)
       {
         symbol: "XAU-PERP",
         name: "Gold Perpetual",
@@ -120,6 +121,92 @@ export class MemStorage implements IStorage {
         metadata: { icon: "fas fa-coins", color: "#E5E4E2" }
       },
       {
+        symbol: "XPD-PERP",
+        name: "Palladium Perpetual",
+        commodityType: CommodityType.PALLADIUM,
+        category: CommodityCategory.PRECIOUS_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.01",
+        maxLeverage: 40,
+        marginRequirement: "0.025",
+        metadata: { icon: "fas fa-coins", color: "#CED0DD" }
+      },
+      {
+        symbol: "XRH-PERP",
+        name: "Rhodium Perpetual",
+        commodityType: CommodityType.RHODIUM,
+        category: CommodityCategory.PRECIOUS_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.01",
+        maxLeverage: 25,
+        marginRequirement: "0.04",
+        metadata: { icon: "fas fa-coins", color: "#A8A8A8" }
+      },
+      {
+        symbol: "XIR-PERP",
+        name: "Iridium Perpetual",
+        commodityType: CommodityType.IRIDIUM,
+        category: CommodityCategory.PRECIOUS_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.01",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-coins", color: "#3D3D3D" }
+      },
+      {
+        symbol: "XRU-PERP",
+        name: "Ruthenium Perpetual",
+        commodityType: CommodityType.RUTHENIUM,
+        category: CommodityCategory.PRECIOUS_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.01",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-coins", color: "#2F4F4F" }
+      },
+      {
+        symbol: "XOS-PERP",
+        name: "Osmium Perpetual",
+        commodityType: CommodityType.OSMIUM,
+        category: CommodityCategory.PRECIOUS_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.01",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-coins", color: "#708090" }
+      },
+      {
+        symbol: "XRE-PERP",
+        name: "Rhenium Perpetual",
+        commodityType: CommodityType.RHENIUM,
+        category: CommodityCategory.PRECIOUS_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.01",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-coins", color: "#696969" }
+      },
+      {
+        symbol: "XIN-PERP",
+        name: "Indium Perpetual",
+        commodityType: CommodityType.INDIUM,
+        category: CommodityCategory.PRECIOUS_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.01",
+        maxLeverage: 30,
+        marginRequirement: "0.033",
+        metadata: { icon: "fas fa-coins", color: "#4B0082" }
+      },
+      
+      // Energy (10)
+      {
         symbol: "CL-PERP",
         name: "Crude Oil WTI Perpetual",
         commodityType: CommodityType.CRUDE_OIL_WTI,
@@ -132,6 +219,18 @@ export class MemStorage implements IStorage {
         metadata: { icon: "fas fa-fire", color: "#8B4513" }
       },
       {
+        symbol: "BZ-PERP",
+        name: "Brent Crude Perpetual",
+        commodityType: CommodityType.BRENT_CRUDE,
+        category: CommodityCategory.ENERGY,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1000",
+        tickSize: "0.01",
+        maxLeverage: 25,
+        marginRequirement: "0.04",
+        metadata: { icon: "fas fa-fire", color: "#654321" }
+      },
+      {
         symbol: "NG-PERP",
         name: "Natural Gas Perpetual",
         commodityType: CommodityType.NATURAL_GAS,
@@ -142,6 +241,334 @@ export class MemStorage implements IStorage {
         maxLeverage: 20,
         marginRequirement: "0.05",
         metadata: { icon: "fas fa-fire", color: "#4169E1" }
+      },
+      {
+        symbol: "RB-PERP",
+        name: "Gasoline Perpetual",
+        commodityType: CommodityType.GASOLINE,
+        category: CommodityCategory.ENERGY,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "42000",
+        tickSize: "0.0001",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-fire", color: "#FF6347" }
+      },
+      {
+        symbol: "HO-PERP",
+        name: "Heating Oil Perpetual",
+        commodityType: CommodityType.HEATING_OIL,
+        category: CommodityCategory.ENERGY,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "42000",
+        tickSize: "0.0001",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-fire", color: "#DC143C" }
+      },
+      {
+        symbol: "COAL-PERP",
+        name: "Coal Perpetual",
+        commodityType: CommodityType.COAL,
+        category: CommodityCategory.ENERGY,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1550",
+        tickSize: "0.01",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-fire", color: "#2F2F2F" }
+      },
+      {
+        symbol: "UX-PERP",
+        name: "Uranium Perpetual",
+        commodityType: CommodityType.URANIUM,
+        category: CommodityCategory.ENERGY,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "250",
+        tickSize: "0.05",
+        maxLeverage: 10,
+        marginRequirement: "0.1",
+        metadata: { icon: "fas fa-fire", color: "#228B22" }
+      },
+      {
+        symbol: "EH-PERP",
+        name: "Ethanol Perpetual",
+        commodityType: CommodityType.ETHANOL,
+        category: CommodityCategory.ENERGY,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "29000",
+        tickSize: "0.001",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-fire", color: "#32CD32" }
+      },
+      {
+        symbol: "PRO-PERP",
+        name: "Propane Perpetual",
+        commodityType: CommodityType.PROPANE,
+        category: CommodityCategory.ENERGY,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "42000",
+        tickSize: "0.001",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-fire", color: "#FF4500" }
+      },
+      {
+        symbol: "ELEC-PERP",
+        name: "Electricity Futures Perpetual",
+        commodityType: CommodityType.ELECTRICITY,
+        category: CommodityCategory.ENERGY,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "736",
+        tickSize: "0.05",
+        maxLeverage: 10,
+        marginRequirement: "0.1",
+        metadata: { icon: "fas fa-fire", color: "#FFD700" }
+      },
+      
+      // Agricultural (10)
+      {
+        symbol: "ZC-PERP",
+        name: "Corn Perpetual",
+        commodityType: CommodityType.CORN,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "5000",
+        tickSize: "0.25",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-seedling", color: "#FFD700" }
+      },
+      {
+        symbol: "ZW-PERP",
+        name: "Wheat Perpetual",
+        commodityType: CommodityType.WHEAT,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "5000",
+        tickSize: "0.25",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-seedling", color: "#DAA520" }
+      },
+      {
+        symbol: "ZS-PERP",
+        name: "Soybeans Perpetual",
+        commodityType: CommodityType.SOYBEANS,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "5000",
+        tickSize: "0.25",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-seedling", color: "#228B22" }
+      },
+      {
+        symbol: "SB-PERP",
+        name: "Sugar Perpetual",
+        commodityType: CommodityType.SUGAR,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "112000",
+        tickSize: "0.01",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-seedling", color: "#F5F5DC" }
+      },
+      {
+        symbol: "KC-PERP",
+        name: "Coffee Perpetual",
+        commodityType: CommodityType.COFFEE,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "37500",
+        tickSize: "0.05",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-seedling", color: "#8B4513" }
+      },
+      {
+        symbol: "CC-PERP",
+        name: "Cocoa Perpetual",
+        commodityType: CommodityType.COCOA,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "10",
+        tickSize: "1",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-seedling", color: "#D2691E" }
+      },
+      {
+        symbol: "CT-PERP",
+        name: "Cotton Perpetual",
+        commodityType: CommodityType.COTTON,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "50000",
+        tickSize: "0.01",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-seedling", color: "#F5F5DC" }
+      },
+      {
+        symbol: "ZR-PERP",
+        name: "Rice Perpetual",
+        commodityType: CommodityType.RICE,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "2000",
+        tickSize: "0.005",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-seedling", color: "#F5F5DC" }
+      },
+      {
+        symbol: "LE-PERP",
+        name: "Cattle Perpetual",
+        commodityType: CommodityType.CATTLE,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "40000",
+        tickSize: "0.025",
+        maxLeverage: 10,
+        marginRequirement: "0.1",
+        metadata: { icon: "fas fa-seedling", color: "#8B4513" }
+      },
+      {
+        symbol: "HE-PERP",
+        name: "Lean Hogs Perpetual",
+        commodityType: CommodityType.LEAN_HOGS,
+        category: CommodityCategory.AGRICULTURE,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "40000",
+        tickSize: "0.025",
+        maxLeverage: 10,
+        marginRequirement: "0.1",
+        metadata: { icon: "fas fa-seedling", color: "#DDA0DD" }
+      },
+      
+      // Industrial Metals (10)
+      {
+        symbol: "HG-PERP",
+        name: "Copper Perpetual",
+        commodityType: CommodityType.COPPER,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "25000",
+        tickSize: "0.0005",
+        maxLeverage: 25,
+        marginRequirement: "0.04",
+        metadata: { icon: "fas fa-industry", color: "#B87333" }
+      },
+      {
+        symbol: "ALI-PERP",
+        name: "Aluminum Perpetual",
+        commodityType: CommodityType.ALUMINUM,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "25",
+        tickSize: "0.5",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-industry", color: "#C0C0C0" }
+      },
+      {
+        symbol: "ZNC-PERP",
+        name: "Zinc Perpetual",
+        commodityType: CommodityType.ZINC,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "25",
+        tickSize: "0.5",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-industry", color: "#71797E" }
+      },
+      {
+        symbol: "NIC-PERP",
+        name: "Nickel Perpetual",
+        commodityType: CommodityType.NICKEL,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "6",
+        tickSize: "5",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-industry", color: "#99D6EA" }
+      },
+      {
+        symbol: "LED-PERP",
+        name: "Lead Perpetual",
+        commodityType: CommodityType.LEAD,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "25",
+        tickSize: "0.5",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-industry", color: "#2F4F4F" }
+      },
+      {
+        symbol: "TIN-PERP",
+        name: "Tin Perpetual",
+        commodityType: CommodityType.TIN,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "5",
+        tickSize: "5",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-industry", color: "#778899" }
+      },
+      {
+        symbol: "FE-PERP",
+        name: "Iron Ore Perpetual",
+        commodityType: CommodityType.IRON_ORE,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "100",
+        tickSize: "0.01",
+        maxLeverage: 10,
+        marginRequirement: "0.1",
+        metadata: { icon: "fas fa-industry", color: "#CD853F" }
+      },
+      {
+        symbol: "STL-PERP",
+        name: "Steel Perpetual",
+        commodityType: CommodityType.STEEL,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "5",
+        tickSize: "0.1",
+        maxLeverage: 10,
+        marginRequirement: "0.1",
+        metadata: { icon: "fas fa-industry", color: "#4682B4" }
+      },
+      {
+        symbol: "LIT-PERP",
+        name: "Lithium Perpetual",
+        commodityType: CommodityType.LITHIUM,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.25",
+        maxLeverage: 20,
+        marginRequirement: "0.05",
+        metadata: { icon: "fas fa-industry", color: "#C0C0C0" }
+      },
+      {
+        symbol: "COB-PERP",
+        name: "Cobalt Perpetual",
+        commodityType: CommodityType.COBALT,
+        category: CommodityCategory.INDUSTRIAL_METALS,
+        marketType: MarketType.PERPETUAL,
+        contractSize: "1",
+        tickSize: "0.05",
+        maxLeverage: 15,
+        marginRequirement: "0.067",
+        metadata: { icon: "fas fa-industry", color: "#0047AB" }
       }
     ];
 
@@ -171,26 +598,53 @@ export class MemStorage implements IStorage {
 
   private getBasePriceForCommodity(commodityType: CommodityType): number {
     const basePrices: Record<CommodityType, number> = {
+      // Precious Metals
       [CommodityType.GOLD]: 2048.65,
       [CommodityType.SILVER]: 24.38,
       [CommodityType.PLATINUM]: 985.40,
       [CommodityType.PALLADIUM]: 1245.80,
       [CommodityType.RHODIUM]: 4850.00,
+      [CommodityType.IRIDIUM]: 6800.00,
+      [CommodityType.RUTHENIUM]: 485.00,
+      [CommodityType.OSMIUM]: 12500.00,
+      [CommodityType.RHENIUM]: 2850.00,
+      [CommodityType.INDIUM]: 285.50,
+      
+      // Energy
       [CommodityType.CRUDE_OIL_WTI]: 78.25,
       [CommodityType.BRENT_CRUDE]: 82.15,
       [CommodityType.NATURAL_GAS]: 3.45,
       [CommodityType.GASOLINE]: 2.85,
       [CommodityType.HEATING_OIL]: 3.12,
+      [CommodityType.COAL]: 185.50,
+      [CommodityType.URANIUM]: 68.75,
+      [CommodityType.ETHANOL]: 2.25,
+      [CommodityType.PROPANE]: 1.85,
+      [CommodityType.ELECTRICITY]: 45.25,
+      
+      // Agricultural
       [CommodityType.CORN]: 485.50,
       [CommodityType.WHEAT]: 612.25,
       [CommodityType.SOYBEANS]: 1245.75,
       [CommodityType.SUGAR]: 0.22,
       [CommodityType.COFFEE]: 1.68,
+      [CommodityType.COCOA]: 2850.00,
+      [CommodityType.COTTON]: 0.75,
+      [CommodityType.RICE]: 18.45,
+      [CommodityType.CATTLE]: 175.25,
+      [CommodityType.LEAN_HOGS]: 82.50,
+      
+      // Industrial Metals
       [CommodityType.COPPER]: 3.85,
       [CommodityType.ALUMINUM]: 2.12,
       [CommodityType.ZINC]: 2.65,
       [CommodityType.NICKEL]: 18.45,
-      [CommodityType.LITHIUM]: 15.25
+      [CommodityType.LEAD]: 2.15,
+      [CommodityType.TIN]: 28.50,
+      [CommodityType.IRON_ORE]: 125.75,
+      [CommodityType.STEEL]: 685.25,
+      [CommodityType.LITHIUM]: 15.25,
+      [CommodityType.COBALT]: 28.85
     };
     return basePrices[commodityType] || 100;
   }

@@ -5,86 +5,97 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(222, 15%, 6%);
-  --foreground: hsl(213, 20%, 95%);
-  --card: hsl(222, 15%, 10%);
-  --card-foreground: hsl(213, 20%, 95%);
-  --popover: hsl(222, 15%, 10%);
-  --popover-foreground: hsl(213, 20%, 95%);
-  --primary: hsl(191, 100%, 50%);
-  --primary-foreground: hsl(222, 15%, 6%);
-  --secondary: hsl(30, 60%, 45%);
-  --secondary-foreground: hsl(222, 15%, 6%);
-  --muted: hsl(217, 15%, 15%);
-  --muted-foreground: hsl(213, 20%, 65%);
-  --accent: hsl(153, 100%, 55%);
-  --accent-foreground: hsl(222, 15%, 6%);
+  /* Vector Protocol Dark Theme - Deep Navy Base */
+  --background: hsl(222, 25%, 4%);
+  --foreground: hsl(210, 20%, 98%);
+  --card: hsl(222, 20%, 8%);
+  --card-foreground: hsl(210, 20%, 95%);
+  --popover: hsl(222, 20%, 8%);
+  --popover-foreground: hsl(210, 20%, 95%);
+  
+  /* Vector Protocol Brand Colors */
+  --primary: hsl(191, 100%, 50%);        /* Electric Cyan #00D4FF */
+  --primary-foreground: hsl(222, 25%, 4%);
+  --secondary: hsl(21, 100%, 51%);       /* Commodity Orange #FF6B00 */
+  --secondary-foreground: hsl(222, 25%, 4%);
+  --accent: hsl(153, 100%, 55%);         /* Trading Green #00FF88 */
+  --accent-foreground: hsl(222, 25%, 4%);
+  
+  /* UI State Colors */
+  --muted: hsl(217, 20%, 12%);
+  --muted-foreground: hsl(210, 15%, 65%);
   --destructive: hsl(0, 100%, 60%);
-  --destructive-foreground: hsl(213, 20%, 95%);
-  --border: hsl(217, 15%, 20%);
-  --input: hsl(217, 15%, 15%);
+  --destructive-foreground: hsl(210, 20%, 95%);
+  --border: hsl(217, 20%, 18%);
+  --input: hsl(217, 20%, 12%);
   --ring: hsl(191, 100%, 50%);
-  --chart-1: hsl(191, 100%, 50%);
-  --chart-2: hsl(153, 100%, 55%);
-  --chart-3: hsl(30, 60%, 45%);
-  --chart-4: hsl(280, 65%, 60%);
-  --chart-5: hsl(45, 90%, 55%);
-  --sidebar: hsl(222, 15%, 10%);
-  --sidebar-foreground: hsl(213, 20%, 95%);
+  
+  /* Chart Colors - Vector Protocol Palette */
+  --chart-1: hsl(191, 100%, 50%);        /* Primary Cyan */
+  --chart-2: hsl(153, 100%, 55%);        /* Trading Green */
+  --chart-3: hsl(21, 100%, 51%);         /* Commodity Orange */
+  --chart-4: hsl(280, 65%, 60%);         /* Purple Accent */
+  --chart-5: hsl(45, 100%, 60%);         /* Gold Accent */
+  
+  /* Sidebar Styling */
+  --sidebar: hsl(222, 20%, 8%);
+  --sidebar-foreground: hsl(210, 20%, 95%);
   --sidebar-primary: hsl(191, 100%, 50%);
-  --sidebar-primary-foreground: hsl(222, 15%, 6%);
+  --sidebar-primary-foreground: hsl(222, 25%, 4%);
   --sidebar-accent: hsl(153, 100%, 55%);
-  --sidebar-accent-foreground: hsl(222, 15%, 6%);
-  --sidebar-border: hsl(217, 15%, 20%);
+  --sidebar-accent-foreground: hsl(222, 25%, 4%);
+  --sidebar-border: hsl(217, 20%, 18%);
   --sidebar-ring: hsl(191, 100%, 50%);
+  
+  /* Typography - Vector Protocol */
   --font-sans: 'Inter', sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
   --radius: 0.5rem;
-  --shadow-2xs: 0px 2px 0px 0px hsl(191, 100%, 50%, 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(191, 100%, 50%, 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(191, 100%, 50%, 0.00), 0px 1px 2px -1px hsl(191, 100%, 50%, 0.00);
-  --shadow: 0px 2px 0px 0px hsl(191, 100%, 50%, 0.00), 0px 1px 2px -1px hsl(191, 100%, 50%, 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(191, 100%, 50%, 0.00), 0px 2px 4px -1px hsl(191, 100%, 50%, 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(191, 100%, 50%, 0.00), 0px 4px 6px -1px hsl(191, 100%, 50%, 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(191, 100%, 50%, 0.00), 0px 8px 10px -1px hsl(191, 100%, 50%, 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(191, 100%, 50%, 0.00);
-  --tracking-normal: 0em;
-  --spacing: 0.25rem;
+  
+  /* Vector Protocol Gradients */
+  --gradient-main: linear-gradient(135deg, hsl(191, 100%, 50%) 0%, hsl(153, 100%, 55%) 100%);
+  --gradient-commodity: linear-gradient(135deg, hsl(21, 100%, 51%) 0%, hsl(45, 100%, 60%) 100%);
+  
+  /* Enhanced Shadows */
+  --shadow-glow-cyan: 0px 0px 20px hsla(191, 100%, 50%, 0.3);
+  --shadow-glow-green: 0px 0px 20px hsla(153, 100%, 55%, 0.3);
+  --shadow-glow-orange: 0px 0px 20px hsla(21, 100%, 51%, 0.3);
 }
 
 .dark {
-  --background: hsl(222, 15%, 6%);
-  --foreground: hsl(213, 20%, 95%);
-  --card: hsl(222, 15%, 10%);
-  --card-foreground: hsl(213, 20%, 95%);
-  --popover: hsl(222, 15%, 10%);
-  --popover-foreground: hsl(213, 20%, 95%);
+  /* Vector Protocol Dark Theme - Inherit from root */
+  --background: hsl(222, 25%, 4%);
+  --foreground: hsl(210, 20%, 98%);
+  --card: hsl(222, 20%, 8%);
+  --card-foreground: hsl(210, 20%, 95%);
+  --popover: hsl(222, 20%, 8%);
+  --popover-foreground: hsl(210, 20%, 95%);
   --primary: hsl(191, 100%, 50%);
-  --primary-foreground: hsl(222, 15%, 6%);
-  --secondary: hsl(30, 60%, 45%);
-  --secondary-foreground: hsl(222, 15%, 6%);
-  --muted: hsl(217, 15%, 15%);
-  --muted-foreground: hsl(213, 20%, 65%);
+  --primary-foreground: hsl(222, 25%, 4%);
+  --secondary: hsl(21, 100%, 51%);
+  --secondary-foreground: hsl(222, 25%, 4%);
+  --muted: hsl(217, 20%, 12%);
+  --muted-foreground: hsl(210, 15%, 65%);
   --accent: hsl(153, 100%, 55%);
-  --accent-foreground: hsl(222, 15%, 6%);
+  --accent-foreground: hsl(222, 25%, 4%);
   --destructive: hsl(0, 100%, 60%);
-  --destructive-foreground: hsl(213, 20%, 95%);
-  --border: hsl(217, 15%, 20%);
-  --input: hsl(217, 15%, 15%);
+  --destructive-foreground: hsl(210, 20%, 95%);
+  --border: hsl(217, 20%, 18%);
+  --input: hsl(217, 20%, 12%);
   --ring: hsl(191, 100%, 50%);
   --chart-1: hsl(191, 100%, 50%);
   --chart-2: hsl(153, 100%, 55%);
-  --chart-3: hsl(30, 60%, 45%);
+  --chart-3: hsl(21, 100%, 51%);
   --chart-4: hsl(280, 65%, 60%);
-  --chart-5: hsl(45, 90%, 55%);
-  --sidebar: hsl(222, 15%, 10%);
-  --sidebar-foreground: hsl(213, 20%, 95%);
+  --chart-5: hsl(45, 100%, 60%);
+  --sidebar: hsl(222, 20%, 8%);
+  --sidebar-foreground: hsl(210, 20%, 95%);
   --sidebar-primary: hsl(191, 100%, 50%);
-  --sidebar-primary-foreground: hsl(222, 15%, 6%);
+  --sidebar-primary-foreground: hsl(222, 25%, 4%);
   --sidebar-accent: hsl(153, 100%, 55%);
-  --sidebar-accent-foreground: hsl(222, 15%, 6%);
-  --sidebar-border: hsl(217, 15%, 20%);
+  --sidebar-accent-foreground: hsl(222, 25%, 4%);
+  --sidebar-border: hsl(217, 20%, 18%);
   --sidebar-ring: hsl(191, 100%, 50%);
   --font-sans: 'Inter', sans-serif;
   --font-serif: Georgia, serif;
@@ -102,24 +113,109 @@
   }
 }
 
+/* Vector Protocol Trading Colors */
 .trading-green {
-  color: hsl(153, 100%, 55%);
+  color: hsl(153, 100%, 55%);  /* Vector Green */
 }
 
 .trading-red {
   color: hsl(0, 100%, 60%);
 }
 
+.vector-primary {
+  color: hsl(191, 100%, 50%);  /* Electric Cyan */
+}
+
+.vector-secondary {
+  color: hsl(21, 100%, 51%);   /* Commodity Orange */
+}
+
+.vector-accent {
+  color: hsl(153, 100%, 55%);  /* Trading Green */
+}
+
+/* Price Movement Animations */
 .price-up {
-  background: linear-gradient(90deg, transparent 0%, hsla(153, 100%, 55%, 0.1) 100%);
+  background: linear-gradient(90deg, transparent 0%, hsla(153, 100%, 55%, 0.15) 100%);
+  animation: pulse-green 0.6s ease-out;
 }
 
 .price-down {
-  background: linear-gradient(90deg, transparent 0%, hsla(0, 100%, 60%, 0.1) 100%);
+  background: linear-gradient(90deg, transparent 0%, hsla(0, 100%, 60%, 0.15) 100%);
+  animation: pulse-red 0.6s ease-out;
 }
 
+/* Vector Protocol Gradient Backgrounds */
+.vector-gradient-main {
+  background: var(--gradient-main);
+}
+
+.vector-gradient-commodity {
+  background: var(--gradient-commodity);
+}
+
+/* Typography */
 .font-mono {
   font-family: var(--font-mono);
+}
+
+/* Vector Protocol Logo Glow Effect */
+.vector-logo-glow {
+  box-shadow: var(--shadow-glow-cyan);
+  transition: box-shadow 0.3s ease;
+}
+
+.vector-logo-glow:hover {
+  box-shadow: var(--shadow-glow-cyan), 0px 0px 40px hsla(191, 100%, 50%, 0.5);
+}
+
+/* Commodity Category Indicators */
+.commodity-precious {
+  border-left: 3px solid hsl(45, 100%, 60%);  /* Gold */
+}
+
+.commodity-energy {
+  border-left: 3px solid hsl(21, 100%, 51%);  /* Orange */
+}
+
+.commodity-agriculture {
+  border-left: 3px solid hsl(153, 100%, 55%); /* Green */
+}
+
+.commodity-industrial {
+  border-left: 3px solid hsl(191, 100%, 50%); /* Cyan */
+}
+
+/* Pulse Animations */
+@keyframes pulse-green {
+  0% { background-color: hsla(153, 100%, 55%, 0.3); }
+  100% { background-color: transparent; }
+}
+
+@keyframes pulse-red {
+  0% { background-color: hsla(0, 100%, 60%, 0.3); }
+  100% { background-color: transparent; }
+}
+
+/* Vector Protocol Enhanced Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(217, 20%, 12%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, hsl(191, 100%, 50%) 0%, hsl(153, 100%, 55%) 100%);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, hsl(191, 100%, 60%) 0%, hsl(153, 100%, 65%) 100%);
+  box-shadow: 0px 0px 10px hsla(191, 100%, 50%, 0.5);
 }
 
 /* Custom scrollbar for dark theme */

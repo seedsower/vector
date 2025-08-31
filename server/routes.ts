@@ -2,7 +2,10 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
-import { insertOrderSchema, insertPositionSchema, type WebSocketMessage, type PriceUpdate, type OrderUpdate, OrderStatus } from "@shared/schema";
+import { oracleAggregator } from "./oracle";
+import { marketMakerProgram } from "./market-maker";
+import { analytics } from "./analytics";
+import { insertOrderSchema, insertPositionSchema, type WebSocketMessage, type PriceUpdate, type OrderUpdate, type MarketMakerUpdate, OrderStatus } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -38,34 +41,92 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   }
 
-  // Start price simulation
+  // Enhanced price simulation with oracle aggregation
   setInterval(async () => {
     const markets = await storage.getAllMarkets();
     for (const market of markets) {
       const currentPrice = await storage.getPrice(market.id);
       if (currentPrice) {
-        const change = (Math.random() - 0.5) * 0.02; // ±2% max change
-        const newPrice = parseFloat(currentPrice.price) * (1 + change);
-        const changePercent = (change * 100).toFixed(4);
+        try {
+          // Get aggregated price from oracle system
+          const aggregatedPrice = await oracleAggregator.getAggregatedPrice(market.commodityType as any);
+          const change = (Math.random() - 0.5) * 0.02; // ±2% max change
+          const basePrice = parseFloat(aggregatedPrice.price);
+          const newPrice = basePrice * (1 + change);
+          const changePercent = (change * 100).toFixed(4);
 
-        await storage.updatePrice(market.id, {
-          price: newPrice.toFixed(8),
-          change24h: changePercent
-        });
+          await storage.updatePrice(market.id, {
+            price: newPrice.toFixed(8),
+            change24h: changePercent,
+            volume24h: (parseFloat(currentPrice.volume24h) + Math.random() * 100000).toFixed(2)
+          });
 
-        const priceUpdate: PriceUpdate = {
-          type: 'price_update',
-          marketId: market.id,
-          price: newPrice.toFixed(8),
-          change24h: changePercent,
-          volume24h: currentPrice.volume24h,
-          timestamp: Date.now()
-        };
+          const priceUpdate: PriceUpdate = {
+            type: 'price_update',
+            marketId: market.id,
+            price: newPrice.toFixed(8),
+            change24h: changePercent,
+            volume24h: currentPrice.volume24h,
+            timestamp: Date.now(),
+            aggregatedData: aggregatedPrice
+          };
 
-        broadcast(priceUpdate);
+          broadcast(priceUpdate);
+        } catch (error) {
+          // Fallback to simple price simulation if oracle fails
+          const change = (Math.random() - 0.5) * 0.02;
+          const newPrice = parseFloat(currentPrice.price) * (1 + change);
+          const changePercent = (change * 100).toFixed(4);
+
+          await storage.updatePrice(market.id, {
+            price: newPrice.toFixed(8),
+            change24h: changePercent
+          });
+
+          const priceUpdate: PriceUpdate = {
+            type: 'price_update',
+            marketId: market.id,
+            price: newPrice.toFixed(8),
+            change24h: changePercent,
+            volume24h: currentPrice.volume24h,
+            timestamp: Date.now()
+          };
+
+          broadcast(priceUpdate);
+        }
       }
     }
   }, 3000);
+
+  // Market maker stats update simulation
+  setInterval(async () => {
+    const demoUserId = "demo-user";
+    const volume = Math.random() * 10000;
+    const depthContribution = Math.random() * 10;
+    const uptimePercentage = 95 + Math.random() * 5;
+    
+    const stats = await marketMakerProgram.updateMakerStats(
+      demoUserId,
+      volume,
+      depthContribution,
+      uptimePercentage
+    );
+    
+    const rebates = await marketMakerProgram.calculateRebates(
+      demoUserId,
+      "GOLD" as any,
+      volume
+    );
+    
+    const marketMakerUpdate: MarketMakerUpdate = {
+      type: 'market_maker_update',
+      userId: demoUserId,
+      stats,
+      rebates
+    };
+    
+    broadcast(marketMakerUpdate);
+  }, 10000);
 
   // Markets API
   app.get("/api/markets", async (req, res) => {
@@ -243,6 +304,104 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(trades);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch trades" });
+    }
+  });
+
+  // Oracle API
+  app.get("/api/oracle/health", async (req, res) => {
+    try {
+      const health = oracleAggregator.getOracleHealth();
+      res.json(health);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch oracle health" });
+    }
+  });
+
+  app.get("/api/oracle/price/:commodity", async (req, res) => {
+    try {
+      const { commodity } = req.params;
+      const aggregatedPrice = await oracleAggregator.getAggregatedPrice(commodity as any);
+      res.json(aggregatedPrice);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch aggregated price" });
+    }
+  });
+
+  // Market Maker API
+  app.get("/api/market-maker/stats/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const stats = await marketMakerProgram.getMakerStats(userId);
+      res.json(stats);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch market maker stats" });
+    }
+  });
+
+  app.get("/api/market-maker/leaderboard", async (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 10;
+      const leaderboard = marketMakerProgram.getLeaderboard(limit);
+      res.json(leaderboard);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch leaderboard" });
+    }
+  });
+
+  app.post("/api/market-maker/rebates", async (req, res) => {
+    try {
+      const { userId, commodityType, volume } = req.body;
+      const rebates = await marketMakerProgram.calculateRebates(userId, commodityType, volume);
+      res.json(rebates);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to calculate rebates" });
+    }
+  });
+
+  // Analytics API
+  app.get("/api/analytics/overview", async (req, res) => {
+    try {
+      const overview = await analytics.getOverviewMetrics();
+      res.json(overview);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch overview metrics" });
+    }
+  });
+
+  app.get("/api/analytics/commodities", async (req, res) => {
+    try {
+      const commodities = await analytics.getCommodityMetrics();
+      res.json(commodities);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch commodity metrics" });
+    }
+  });
+
+  app.get("/api/analytics/volumes", async (req, res) => {
+    try {
+      const volumes = await analytics.getVolumeMetrics();
+      res.json(volumes);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch volume metrics" });
+    }
+  });
+
+  app.get("/api/analytics/portfolio/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const portfolioAnalytics = await analytics.getPortfolioAnalytics(userId);
+      res.json(portfolioAnalytics);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch portfolio analytics" });
+    }
+  });
+
+  app.get("/api/analytics/full", async (req, res) => {
+    try {
+      const fullAnalytics = await analytics.getFullAnalytics();
+      res.json(fullAnalytics);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch full analytics" });
     }
   });
 

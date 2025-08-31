@@ -4,33 +4,53 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export enum CommodityType {
-  // Precious Metals
+  // Precious Metals (10)
   GOLD = "XAU",
   SILVER = "XAG", 
   PLATINUM = "XPT",
   PALLADIUM = "XPD",
   RHODIUM = "XRH",
+  IRIDIUM = "XIR",
+  RUTHENIUM = "XRU",
+  OSMIUM = "XOS",
+  RHENIUM = "XRE",
+  INDIUM = "XIN",
   
-  // Energy
+  // Energy (10)
   CRUDE_OIL_WTI = "CL",
   BRENT_CRUDE = "BZ",
   NATURAL_GAS = "NG",
   GASOLINE = "RB",
   HEATING_OIL = "HO",
+  COAL = "COAL",
+  URANIUM = "UX",
+  ETHANOL = "EH",
+  PROPANE = "PRO",
+  ELECTRICITY = "ELEC",
   
-  // Agricultural
+  // Agricultural (10)
   CORN = "ZC",
   WHEAT = "ZW",
   SOYBEANS = "ZS",
   SUGAR = "SB",
   COFFEE = "KC",
+  COCOA = "CC",
+  COTTON = "CT",
+  RICE = "ZR",
+  CATTLE = "LE",
+  LEAN_HOGS = "HE",
   
-  // Industrial Metals
+  // Industrial Metals (10)
   COPPER = "HG",
   ALUMINUM = "ALI",
   ZINC = "ZNC",
   NICKEL = "NIC",
-  LITHIUM = "LIT"
+  LEAD = "LED",
+  TIN = "TIN",
+  IRON_ORE = "FE",
+  STEEL = "STL",
+  LITHIUM = "LIT",
+  COBALT = "COB"
 }
 
 export enum CommodityCategory {
@@ -49,7 +69,11 @@ export enum OrderType {
   MARKET = "market",
   LIMIT = "limit",
   STOP = "stop",
-  STOP_LIMIT = "stop_limit"
+  STOP_LIMIT = "stop_limit",
+  TRAILING_STOP = "trailing_stop",
+  ICEBERG = "iceberg",
+  TWAP = "twap",
+  BRACKET = "bracket"
 }
 
 export enum OrderSide {
@@ -208,6 +232,59 @@ export type Portfolio = typeof portfolios.$inferSelect;
 export type Trade = typeof trades.$inferSelect;
 export type InsertTrade = z.infer<typeof insertTradeSchema>;
 
+// Risk Management
+export interface RiskParameters {
+  maxPositionSize: string;
+  maxLeverage: number;
+  marginCallThreshold: string;
+  liquidationThreshold: string;
+  dailyLossLimit: string;
+  maxOpenOrders: number;
+}
+
+export interface LiquidationData {
+  positionId: string;
+  liquidationPrice: string;
+  currentPrice: string;
+  healthFactor: string;
+  timeToLiquidation: number;
+}
+
+// Oracle and Price Aggregation
+export interface OracleSource {
+  name: string;
+  endpoint: string;
+  weight: number;
+  isActive: boolean;
+  confidence: number;
+}
+
+export interface AggregatedPrice {
+  price: string;
+  confidence: number;
+  sources: OracleSource[];
+  timestamp: number;
+  deviation: string;
+}
+
+// Market Maker Incentives
+export interface MarketMakerStats {
+  userId: string;
+  volume30d: string;
+  depthScore: number;
+  uptimeScore: number;
+  tier: string;
+}
+
+export interface RebateCalculation {
+  baseRebate: number;
+  volumeBonus: number;
+  depthBonus: number;
+  commodityMultiplier: number;
+  totalRebate: number;
+  vectorTokenRewards: string;
+}
+
 // WebSocket message types
 export interface PriceUpdate {
   type: 'price_update';
@@ -216,6 +293,7 @@ export interface PriceUpdate {
   change24h: string;
   volume24h: string;
   timestamp: number;
+  aggregatedData?: AggregatedPrice;
 }
 
 export interface OrderUpdate {
@@ -223,6 +301,7 @@ export interface OrderUpdate {
   orderId: string;
   status: OrderStatus;
   filledSize: string;
+  averagePrice?: string;
 }
 
 export interface TradeUpdate {
@@ -231,4 +310,17 @@ export interface TradeUpdate {
   trade: Trade;
 }
 
-export type WebSocketMessage = PriceUpdate | OrderUpdate | TradeUpdate;
+export interface LiquidationAlert {
+  type: 'liquidation_alert';
+  positionId: string;
+  data: LiquidationData;
+}
+
+export interface MarketMakerUpdate {
+  type: 'market_maker_update';
+  userId: string;
+  stats: MarketMakerStats;
+  rebates: RebateCalculation;
+}
+
+export type WebSocketMessage = PriceUpdate | OrderUpdate | TradeUpdate | LiquidationAlert | MarketMakerUpdate;

@@ -14,25 +14,40 @@ export function TradingHeader({ selectedMarket, currentPrice }: TradingHeaderPro
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-8">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-              <i className="fas fa-vector-square text-primary-foreground text-lg"></i>
+            <div className="w-8 h-8 vector-gradient-main rounded-lg flex items-center justify-center vector-logo-glow">
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L22 20H2L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
+                <path d="M12 8V16M8 12H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
             </div>
-            <h1 className="text-xl font-bold text-foreground" data-testid="app-title">Vector Protocol</h1>
+            <h1 className="text-xl font-bold vector-primary" data-testid="app-title">Vector Protocol</h1>
+            <span className="text-xs bg-accent/20 text-accent px-2 py-1 rounded-full font-medium">Commodities DEX</span>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#" className="text-primary font-medium" data-testid="nav-trade">Trade</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-markets">Markets</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-portfolio">Portfolio</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-analytics">Analytics</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-earn">Earn</a>
+            <a href="#" className="vector-primary font-medium border-b-2 border-primary" data-testid="nav-trade">Trade</a>
+            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-markets">Markets</a>
+            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-portfolio">Portfolio</a>
+            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-analytics">Analytics</a>
+            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-governance">Governance</a>
+            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-earn">Earn</a>
           </nav>
         </div>
         <div className="flex items-center space-x-4">
-          <div className="hidden md:flex items-center space-x-2 text-sm">
-            <div className="w-2 h-2 bg-accent rounded-full"></div>
-            <span className="text-muted-foreground" data-testid="network-status">Solana Mainnet</span>
+          <div className="hidden md:flex items-center space-x-4 text-sm">
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+              <span className="text-muted-foreground" data-testid="network-status">Solana Mainnet</span>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Block: <span className="font-mono text-accent">248,392,847</span>
+            </div>
           </div>
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90" data-testid="button-connect-wallet">
+          <Button className="vector-gradient-main text-white hover:shadow-lg transition-all" data-testid="button-connect-wallet">
+            <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
             Connect Wallet
           </Button>
         </div>
