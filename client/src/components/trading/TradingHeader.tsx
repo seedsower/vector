@@ -24,12 +24,12 @@ export function TradingHeader({ selectedMarket, currentPrice }: TradingHeaderPro
             <span className="text-xs bg-accent/20 text-accent px-2 py-1 rounded-full font-medium">Commodities DEX</span>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#" className="vector-primary font-medium border-b-2 border-primary" data-testid="nav-trade">Trade</a>
-            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-markets">Markets</a>
+            <a href="/" className="vector-primary font-medium border-b-2 border-primary" data-testid="nav-trade">Trade</a>
+            <a href="/markets" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-markets">Markets</a>
             <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-portfolio">Portfolio</a>
-            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-analytics">Analytics</a>
-            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-governance">Governance</a>
-            <a href="#" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-earn">Earn</a>
+            <a href="/analytics" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-analytics">Analytics</a>
+            <a href="/governance" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-governance">Governance</a>
+            <a href="/earn" className="text-muted-foreground hover:vector-primary transition-colors" data-testid="nav-earn">Earn</a>
           </nav>
         </div>
         <div className="flex items-center space-x-4">

@@ -13,7 +13,7 @@
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.1",
     "@hookform/resolvers": "^3.10.0",
-    "@jridgewell/trace-mapping": "^0.3.25",
+    "@jridgewell/trace-mapping": "^0.3.30",
     "@neondatabase/serverless": "^0.10.4",
     "@project-serum/borsh": "^0.2.5",
     "@radix-ui/react-accordion": "^1.2.4",
