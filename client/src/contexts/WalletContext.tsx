@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import "../lib/solana-polyfills";
 import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 
 interface WalletContextType {
