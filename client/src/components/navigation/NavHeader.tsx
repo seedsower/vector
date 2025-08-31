@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Activity, BarChart3, Vote, Coins } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useWallet } from "@/contexts/WalletContext";
 
 const navigation = [
   { name: "Trade", href: "/", icon: Activity },
@@ -16,6 +17,7 @@ const navigation = [
 export function NavHeader() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const { connected, connecting, publicKey, connect, disconnect } = useWallet();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -68,8 +70,14 @@ export function NavHeader() {
             <div className="h-2 w-2 rounded-full bg-green-500"></div>
             <span className="text-sm text-muted-foreground">Solana Devnet</span>
           </div>
-          <Button variant="outline" size="sm">
-            Connect Wallet
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={connected ? disconnect : connect}
+            disabled={connecting}
+            data-testid="wallet-button"
+          >
+            {connecting ? "Connecting..." : connected ? `${publicKey?.toString().slice(0, 4)}...${publicKey?.toString().slice(-4)}` : "Connect Wallet"}
           </Button>
         </div>
 
@@ -109,8 +117,14 @@ export function NavHeader() {
                     <div className="h-2 w-2 rounded-full bg-green-500"></div>
                     <span className="text-sm text-muted-foreground">Solana Devnet</span>
                   </div>
-                  <Button variant="outline" className="w-full">
-                    Connect Wallet
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={connected ? disconnect : connect}
+                    disabled={connecting}
+                    data-testid="wallet-button-mobile"
+                  >
+                    {connecting ? "Connecting..." : connected ? `${publicKey?.toString().slice(0, 4)}...${publicKey?.toString().slice(-4)}` : "Connect Wallet"}
                   </Button>
                 </div>
               </div>

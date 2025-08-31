@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { formatPrice, formatPercent } from "@/lib/trading";
 import { ChartLine } from "lucide-react";
+import { useWallet } from "@/contexts/WalletContext";
 import type { CommodityMarket, Price } from "@shared/schema";
 
 interface TradingHeaderProps {
@@ -9,6 +10,7 @@ interface TradingHeaderProps {
 }
 
 export function TradingHeader({ selectedMarket, currentPrice }: TradingHeaderProps) {
+  const { connected, connecting, publicKey, connect, disconnect } = useWallet();
   return (
     <header className="bg-card border-b border-border px-6 py-4" data-testid="trading-header">
       <div className="flex items-center justify-between">
@@ -42,13 +44,18 @@ export function TradingHeader({ selectedMarket, currentPrice }: TradingHeaderPro
               Block: <span className="font-mono text-accent">248,392,847</span>
             </div>
           </div>
-          <Button className="vector-gradient-main text-white hover:shadow-lg transition-all" data-testid="button-connect-wallet">
+          <Button 
+            className="vector-gradient-main text-white hover:shadow-lg transition-all" 
+            data-testid="button-connect-wallet"
+            onClick={connected ? disconnect : connect}
+            disabled={connecting}
+          >
             <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            Connect Wallet
+            {connecting ? "Connecting..." : connected ? `${publicKey?.toString().slice(0, 4)}...${publicKey?.toString().slice(-4)}` : "Connect Wallet"}
           </Button>
         </div>
       </div>
