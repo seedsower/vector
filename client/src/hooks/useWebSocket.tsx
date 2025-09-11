@@ -9,6 +9,12 @@ export function useWebSocket(url: string) {
   const reconnectAttemptsRef = useRef(0);
 
   const connect = () => {
+    // Only connect to WebSocket in development mode
+    if (import.meta.env.PROD) {
+      console.log('WebSocket disabled in production mode');
+      return;
+    }
+
     try {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const wsUrl = `${protocol}//${window.location.host}/ws`;
