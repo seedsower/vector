@@ -1,4 +1,3 @@
-import { apiRequest } from './queryClient';
 import type { 
   CommodityMarket, 
   Price, 
@@ -10,6 +9,76 @@ import type {
   OrderType,
   OrderSide
 } from '@shared/schema';
+import { 
+  mockMarkets, 
+  mockPrices, 
+  mockTrades, 
+  mockPositions, 
+  mockPortfolio, 
+  mockAnalytics, 
+  mockOracleHealth 
+} from './mockData';
+
+const API_BASE = '';
+const IS_PRODUCTION = import.meta.env.PROD;
+
+async function apiRequest(method: string, endpoint: string, body?: any) {
+  // In production, return mock data instead of making API calls
+  if (IS_PRODUCTION) {
+    return createMockResponse(endpoint, method, body);
+  }
+
+  const response = await fetch(`${API_BASE}${endpoint}`, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.statusText}`);
+  }
+
+  return response;
+}
+
+function createMockResponse(endpoint: string, method: string, body?: any) {
+  let data: any;
+
+  // Route mock data based on endpoint
+  if (endpoint === '/api/markets') {
+    data = mockMarkets;
+  } else if (endpoint === '/api/prices') {
+    data = mockPrices;
+  } else if (endpoint.startsWith('/api/trades/')) {
+    data = mockTrades;
+  } else if (endpoint.startsWith('/api/positions/')) {
+    data = mockPositions;
+  } else if (endpoint.startsWith('/api/portfolio/')) {
+    data = mockPortfolio;
+  } else if (endpoint.startsWith('/api/analytics/')) {
+    data = mockAnalytics;
+  } else if (endpoint.startsWith('/api/oracle/')) {
+    data = mockOracleHealth;
+  } else if (method === 'POST' && endpoint === '/api/orders') {
+    // Mock order creation
+    data = {
+      id: `order-${Date.now()}`,
+      ...body,
+      status: 'filled',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+  } else {
+    data = {};
+  }
+
+  return Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve(data)
+  });
+}
 
 export const tradingApi = {
   // Markets
